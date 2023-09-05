@@ -1,0 +1,58 @@
+Question #4: Checking for Uniqueness
+Write an algorithm that determines whether all the elements in a string are unique. You may not convert the string into an array or use array methods to solve this problem. The algorithm should return a boolean.
+Example
+Input: "hello"
+Output: false
+Input: "copyright"
+Output: true
+
+
+Solution in JavaScript: 
+
+const uniqueElements = (string) => {
+  const charSet = new Set();
+  for (let i = 0; i < string.length; i++) {
+    const currentChar = string[i];
+    charSet.add(currentChar);
+  }
+
+  return charSet.size === string.length;
+};
+
+const inputString = "abcde";
+const result = uniqueElements(inputString);
+console.log(result);
+
+
+Solution in C#:
+
+using System;
+
+class Program
+{
+    static bool AreAllCharactersUnique(string input)
+    {
+        if (string.IsNullOrEmpty(input))
+        {
+            return true; // An empty string is considered to have unique characters.
+        }
+        for (int i = 0; i < input.Length - 1; i++)
+        {
+            for (int j = i + 1; j < input.Length; j++)
+            {
+                if (input[i] == input[j])
+                {
+                    return false; // Found a duplicate character
+                }
+            }
+        }
+        return true; // No duplicates found
+    }
+
+    static void Main()
+    {
+        string inputString = "abcde";
+        bool result = AreAllCharactersUnique(inputString);
+        Console.WriteLine(result); // Output: true
+    }
+}

@@ -1,0 +1,103 @@
+Question #1: Turning Strings to URLs
+URLs cannot have spaces. Instead, all spaces in a string are replaced with %20. Write an algorithm that replaces all spaces in a string with %20.
+You may not use the replace() method or regular expressions to solve this problem. Solve the problem with and without recursion.
+Example
+Input: "Jasmine Ann Jones"
+Output: "Jasmine%20Ann%20Jones"
+
+
+Solution in JavaScript: //Without Recursion
+const stringToUrl = (input) => {
+  if (typeof input === 'string') {
+    return input.split(' ').join('%20');
+  } else {
+    return "Please enter a string!";
+  }
+};
+const string = "Jasmine Ann Jones";
+const result = stringToUrl(string);
+console.log(result);
+
+
+Solution in C#: //Without Recursion
+using System;
+using System.Web;
+class Program
+{
+    static string StringToUrl(string input)
+    {
+        if (!string.IsNullOrEmpty(input))
+        {
+            string encoded = HttpUtility.UrlEncode(input);
+            string replaced = encoded.Replace("+", "%20");
+            return replaced;
+        }
+        else
+        {
+            return "Please enter a string!";
+        }
+    }
+    static void Main()
+    {
+        string input = "Jasmine Ann Jones";
+        string result = StringToUrl(input);
+        Console.WriteLine(result);
+    }
+}
+
+
+Solution in JavaScript: //With Recursion
+function stringToUrl(input) {
+  if (typeof input === 'string') {
+    if (input.length === 0) {
+      return "";
+    } else {
+      const firstChar = input[0];
+      const restOfString = input.slice(1);
+      const encodedChar = firstChar === ' ' ? '%20' : encodeURIComponent(firstChar);
+      return encodedChar + stringToUrl(restOfString);
+    }
+  } else {
+    return "Please enter a string!";
+  }
+}
+
+
+const string = "Jasmine Ann Jones";
+const result = stringToUrl(string);
+console.log(result);
+
+
+Solution in C#: //With Recursion
+using System;
+class Program
+{
+    static string StringToUrl(string input)
+    {
+        if (!string.IsNullOrEmpty(input))
+        {
+            return ConvertToUrlEncoded(input, 0);
+        }
+        else
+        {
+            return "Please enter a string!";
+        }
+    }
+    static string ConvertToUrlEncoded(string input, int index)
+    {
+        if (index == input.Length)
+        {
+            return "";
+        }
+        char currentChar = input[index];
+        string encodedChar = currentChar == ' ' ? "%20" : Uri.EscapeDataString(currentChar.ToString());
+        
+        return encodedChar + ConvertToUrlEncoded(input, index + 1);
+    }
+    static void Main()
+    {
+        string input = "Jasmine Ann Jones";
+        string result = StringToUrl(input);
+        Console.WriteLine(result);
+    }
+}
